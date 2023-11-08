@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <!-- SAP UI5 bootstrap from CDN -->
+        <script src="https://ui5.sap.com/1.116.0/resources/sap-ui-core.js"
+                data-sap-ui-libs="sap.m"
+                data-sap-ui-theme="sap_fiori_3_dark"
+                data-sap-ui-resourceroots='{
+                    "ey.fin.ar":"./"
+                }'
+                data-sap-ui-bindingSyntax="complex"
+        ></script>
+        <script>
+            //testing code for our Component.js
+            var oCompContainer = new sap.ui.core.ComponentContainer({
+                name: "ey.fin.ar"
+            });
+            
+            oCompContainer.placeAt("content");
+        </script>
+
+        
+    </head>
+    <body class="sapUiBody">
+        <div id="content"></div>
+    </body>
+</html>

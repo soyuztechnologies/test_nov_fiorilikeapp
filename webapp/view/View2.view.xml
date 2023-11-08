@@ -1,0 +1,81 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.ui.layout.form"
+          xmlns:core="sap.ui.core"  controllerName="ey.fin.ar.controller.View2">
+    <Page title="Page 2" showNavButton="true" navButtonPress="onBack">
+        <ObjectHeader title="{PRODUCT_ID} {NAME}" intro="{DESCRIPTION}" 
+                    number="{PRICE}" numberUnit="{CURRENCY_CODE}" icon="sap-icon://product"></ObjectHeader>
+        
+        <IconTabBar>
+            <items>
+                <IconTabFilter key="tab1" text="More Info" icon="sap-icon://warning">
+                    <core:Fragment fragmentName="ey.fin.ar.fragments.moreInfo" type="XML"></core:Fragment>
+                    <!-- <core:Fragment fragmentName="ey.fin.ar.fragments.moreInfo" type="XML"></core:Fragment> -->
+                </IconTabFilter>
+                <IconTabFilter key="tab2" text="Suppliers" icon="sap-icon://supplier">
+                    <Table id="idTabSupplier" items="{/supplier}" itemPress="onSelectSupplier">
+                        <headerToolbar>
+                            <Toolbar >
+                                <Button icon="sap-icon://filter" tooltip="open filter" press="onFilter"></Button>
+                            </Toolbar>
+                        </headerToolbar>
+                        <items>
+                            <ColumnListItem type="Navigation">
+                                <cells>
+                                    <Text text="{name}"></Text>
+                                    <Input value="{city}" showValueHelp="true" valueHelpRequest="onF4Help"></Input>
+                                    <Text text="{contactNo}"></Text>
+                                    <Text text="{sinceWhen}"></Text>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                        <columns>
+                            <Column>
+                                <header>
+                                    <Label text="Name"></Label>
+                                </header>
+                            </Column>
+                            <Column>
+                                <header>
+                                    <Label text="City"></Label>
+                                </header>
+                            </Column>
+                            <Column minScreenWidth="Tablet" demandPopin="true">
+                                <header>
+                                    <Label text="Contact"></Label>
+                                </header>
+                            </Column>
+                            <Column minScreenWidth="Tablet">
+                                <header>
+                                    <Label text="Since When"></Label>
+                                </header>
+                            </Column>
+                        </columns>
+                    </Table>
+                </IconTabFilter>
+                <IconTabFilter key="tab3" text="Cities" icon="sap-icon://home">
+                    <Select id="idCity" items="{/cities}">
+                        <items>
+                            <core:Item key="{name}" text="{name}"></core:Item>
+                        </items>
+                    </Select>
+                    <ComboBox id="idCityCB" items="{/cities}">
+                        <items>
+                            <core:Item key="{name}" text="{name} - {state}"></core:Item>
+                        </items>
+                    </ComboBox>
+                    <MultiComboBox id="idCityMCB" items="{/cities}" width="50%">
+                        <items>
+                            <core:Item key="{name}" text="{name}"></core:Item>
+                        </items>
+                    </MultiComboBox>
+                </IconTabFilter>
+            </items>
+        </IconTabBar>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer ></ToolbarSpacer>
+                <Button text="Save" press="onSave" type="Accept"></Button>
+                <Button text="Cancel" press="onCancel" type="Reject"></Button>
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

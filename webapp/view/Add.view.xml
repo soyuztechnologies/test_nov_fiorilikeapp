@@ -1,0 +1,66 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" 
+          xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core"
+          xmlns:l="sap.ui.layout"
+          controllerName="ey.fin.ar.controller.Add">
+    <Page title="Manage Product">
+        <VBox class="sapUiSmallMargin">
+            <f:SimpleForm id="SimpleFormChange354"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                title="Product (enter product ID to edit)"
+                labelSpanXL="3"
+                labelSpanL="3"
+                labelSpanM="3"
+                labelSpanS="12"
+                adjustLabelSpan="false"
+                emptySpanXL="4"
+                emptySpanL="4"
+                emptySpanM="4"
+                emptySpanS="0"
+                columnsXL="1"
+                columnsL="1"
+                columnsM="1"
+                singleContainerFullSize="false" >
+                <f:content>
+                    <Label text="Product Id" />
+                    <Input id="productid" value="{temp>/payloadData/PRODUCT_ID}" change="onLoadProduct"/>
+                    <Button tooltip="Load Most Expensive Product" icon="sap-icon://collections-insight" press="onLoadMostExp"></Button>
+                    <Label text="Supplier" />
+                    <Input id="supplier" value="{temp>/payloadData/SUPPLIER_ID}" />
+                    <Label text="Name/Description" />
+                    <Input value="{temp>/payloadData/NAME}">
+                    </Input>
+                    <Input value="{temp>/payloadData/DESCRIPTION}">
+                        <layoutData>
+                            <l:GridData span="XL1 L2 M2 S4" />
+                        </layoutData>
+                    </Input>
+                    <Label text="Price/Currency" />
+                    <Input value="{temp>/payloadData/PRICE}" type="Number">
+                        <layoutData>
+                            <l:GridData span="XL1 L2 M2 S4" />
+                        </layoutData>
+                    </Input>
+                    <Input value="{temp>/payloadData/CURRENCY_CODE}" />
+                    <Label text="Category" />
+                    <Select id="category" selectedKey="{temp>/payloadData/CATEGORY}">
+                        <items>
+                            <core:Item text="Notebooks" key="Notebooks"/>
+                            <core:Item text="Mice" key="Mice"/>
+                            <core:Item text="Projector" key="Projector"/>
+                        </items>
+                    </Select>
+                </f:content>
+            </f:SimpleForm>
+            <Image id="myPhoto" width="40%" height="40%"></Image>
+        </VBox>
+        <footer>
+            <Toolbar >
+                <ToolbarSpacer ></ToolbarSpacer>
+                <Button id="idSave" icon="sap-icon://save" press="onSave" text="Save" type="Accept"></Button>
+                <Button id="idDelete" enabled="false" icon="sap-icon://delete" press="onDelete" text="Delete" type="Reject"></Button>
+                <Button icon="sap-icon://cancel" press="onCancel" text="Clear" type="Emphasized"></Button>
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

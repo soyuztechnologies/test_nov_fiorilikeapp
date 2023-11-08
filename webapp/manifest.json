@@ -1,0 +1,116 @@
+{
+    "sap.app":{
+        "id":"ey.fin.ar",
+        "type": "application",
+        "applicationVersion": {"version": "1.0.0"},
+        "ach": "FIN-ACC-AR",
+        "i18n": "i18n/i18n.properties",
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "dataSources": {
+            "anubhavService":{
+                "uri": "/sap/opu/odata/sap/ZNOV_ODATA_SRV/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0"
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "deviceTypes": {
+            "desktop": true,
+            "phone": true,
+            "tablet": true
+        },
+        "fullWidth": true,
+        "supportedThemes": ["sap_fiori_3,dark", "sap_fiori_3"]
+    },
+    "sap.ui5":{
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "dependencies": {
+            "minUI5Version": "1.116.0",
+            "libs": {
+                "sap.m": {"minVersion": "1.116.0"},
+                "sap.ui.layout": {"minVersion": "1.116.0"},
+                "sap.ui.table": {"minVersion": "1.116.0"}
+            }
+        },
+        "rootView":{
+            "viewName": "ey.fin.ar.view.App",
+            "id": "idRoot",
+            "type": "XML"
+        },
+        "routing": {
+            "config":{
+                "viewPath": "ey.fin.ar.view",
+                "viewType": "XML",
+                "controlId": "appCon",
+                "clearControlAggregation": true
+            },
+            "routes":[{
+                "name": "spiderman",
+                "pattern": "",
+                "target":["optimus","prime"]
+            },{
+                "name": "superman",
+                "pattern": "minion/{fruitId}",
+                "target":["optimus","megnetron"]
+            },{
+                "name": "wonderwomen",
+                "pattern": "supplier/{supplierId}",
+                "target":["optimus","bumbulbee"]
+            },{
+                "name": "ironman",
+                "pattern": "ManageProduct",
+                "target":["optimus","declathon"]
+            }],
+            "targets": {
+                "optimus":{
+                    "viewName": "View1",
+                    "viewId": "idView1",
+                    "controlAggregation": "masterPages"
+                },
+                "prime":{
+                    "viewName": "Empty",
+                    "viewId": "idEmpty",
+                    "controlAggregation": "detailPages"
+                },
+                "megnetron":{
+                    "viewName": "View2",
+                    "viewId": "idView2",
+                    "controlAggregation": "detailPages"
+                },
+                "bumbulbee":{
+                    "viewName": "View3",
+                    "viewId": "idView3",
+                    "controlAggregation": "detailPages"
+                },
+                "declathon":{
+                    "viewName": "Add",
+                    "viewId": "idAdd",
+                    "controlAggregation": "detailPages"
+                }
+            }
+        },
+        "models": {
+            "": {
+                "type": "sap.ui.model.odata.v2.ODataModel",
+                "dataSource": "anubhavService",
+                "settings": {}
+            },
+            "local":{
+                "type": "sap.ui.model.json.JSONModel",
+                "uri": "mockdata/fruits.json"
+            },
+            "i18n":{
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {"bundleUrl": "i18n/i18n.properties"}
+            }
+        }
+    }
+}
