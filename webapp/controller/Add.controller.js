@@ -2,8 +2,9 @@ sap.ui.define([
     'ey/fin/ar/controller/BaseController',
     'sap/m/MessageBox',
     'sap/m/MessageToast',
-    'sap/ui/model/json/JSONModel'
-], function(BaseController, MessageBox, MessageToast, JSONModel) {
+    'sap/ui/model/json/JSONModel',
+    'sap/ui/core/Fragment'
+], function(BaseController, MessageBox, MessageToast, JSONModel, Fragment) {
     'use strict';
     return BaseController.extend("ey.fin.ar.controller.Add",{
         onInit: function(){
@@ -108,6 +109,70 @@ sap.ui.define([
                 }
             });
             
+        },
+        onConfirmPopup: function(oEvent){
+            //Step 1: get the selected item object
+            var oSelectedItem = oEvent.getParameter("selectedItem");
+            //Step 2: from the object list item which was chosen, get the title
+            var sSupplier = oSelectedItem.getTitle();
+            this.oLocalModel.setProperty("/payloadData/SUPPLIER_NAME", oSelectedItem.getIntro())
+            //Step 3: set the data to the same input field inside table
+            this.oField.setValue(sSupplier);
+            
+        },
+        oSupplierPopup: null,
+        oField: null,
+        onF4Supplier: function(oEvent){
+            this.oField = oEvent.getSource();
+            //Inside the callback/promise function you will not be allowed
+            //to access controller object directly hence we need to create
+            //a local variable which will be in scope for callback/promise function
+            //https://www.youtube.com/watch?v=RMsTYQe_3Jg&pp=ygUXYW51YmhhdiB1aTUgdGhhdCA9IHRoaXM%3D
+            var that = this;
+            //Step 1: Create a object of the fragment
+            //IF lo_alv IS NOT BOUND -- only then we create the ALV object
+            //Only when the fragment is created first time, we create its object
+            //Next time, its already there in global variable hence we dont need to create 
+            //we just need to open it
+            if(!this.oSupplierPopup){
+                Fragment.load({
+                    name: 'ey.fin.ar.fragments.popup',
+                    id: 'supplier',
+                    controller: this
+                })
+                //Step 2: it returns the promise, in which we receive our fragment object
+                //https://www.youtube.com/watch?v=zY6gnfxgb9I&pp=ygUScHJvbWlzZSBpbiBzYXAgdWk1
+                .then(function(oFragment){
+                    //Here inside promise function, we cannot access this pointer
+                    //this.oCityPopup will not work, hence we need to create a local variable
+                    //for this pointer to be able to access inside here
+                    //initialize my global variable in first run
+                    that.oSupplierPopup = oFragment;
+
+                    //We have remote control to control our TV, in same manner we have
+                    //Remote control of our fragment is the object of our fragment
+                    that.oSupplierPopup.setTitle("Select your suppliers");
+
+                    //Allow my parasite(fragment) to access body parts(model) using immunity(view)
+                    that.getView().addDependent(oFragment);
+                    //Step 3: logic to bind data with fragment (select dialog)
+                    oFragment.bindAggregation("items",{
+                        path: "/SupplierSet",
+                        template: new sap.m.ObjectListItem({
+                            title:"{BP_ID}",
+                            intro:"{COMPANY_NAME}",
+                            number:"{CITY}",
+                            numberUnit: "{COUNTRY}",
+                            icon:"sap-icon://supplier"
+                        })
+                    });
+                    //Step 4: open the fragment box
+                    oFragment.open();
+                });
+            }else{
+                //just open the already existing fragment object for city
+                this.oSupplierPopup.open();
+            }
         },
         onSave: function(){
             //Step 1: Get our payload from local model

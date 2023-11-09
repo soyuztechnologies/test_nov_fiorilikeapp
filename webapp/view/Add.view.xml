@@ -26,7 +26,8 @@
                     <Input id="productid" value="{temp>/payloadData/PRODUCT_ID}" change="onLoadProduct"/>
                     <Button tooltip="Load Most Expensive Product" icon="sap-icon://collections-insight" press="onLoadMostExp"></Button>
                     <Label text="Supplier" />
-                    <Input id="supplier" value="{temp>/payloadData/SUPPLIER_ID}" />
+                    <Input id="supplier" value="{temp>/payloadData/SUPPLIER_ID}" showValueHelp="true" valueHelpRequest="onF4Supplier" />
+                    <Text text="{temp>/payloadData/SUPPLIER_NAME}"/>
                     <Label text="Name/Description" />
                     <Input value="{temp>/payloadData/NAME}">
                     </Input>
